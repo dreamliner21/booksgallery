@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umur hanyalah angka</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+    body {
+    font-family: 'Times New Roman', Times, serif;
+    position: relative; /* Diperlukan untuk menyusun pseudo-element */
+}
+
+body::before {
+    content: '';
+    position: fixed; /* Menetapkan posisi tetap untuk meluas ke seluruh halaman */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('bg_books1.jpg') center/cover no-repeat;
+    opacity: 0.7;
+    z-index: -1; /* Menempatkan pseudo-element di belakang konten utama */
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50px;
+    left: -100%;
+    width: 180px; /* Sesuaikan lebar popup */
+    height: 80px; /* Sesuaikan tinggi popup */
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    transition: left 1s ease-in-out;
+}
+
+.popup h3 {
+    margin-top: 0;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.popup p {
+    margin-bottom: 0;
+    font-size: 12px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: justify;
+    position: relative; /* Menjamin elemen konten memiliki z-index lebih tinggi daripada pseudo-element */
+    z-index: 1;
+}
+
+.chapter-title {
+    text-align: center;
+    font-size: 14px;
+}
+
+.story-text {
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 12px;
+}
+      .character-deo {
+    font-weight: bold;
+    font-size: 12px;
+    color: #00000; /* Warna teks karakter Deo */
+}
+
+.character-dea {
+    font-weight: bold;
+    font-size: 12px;
+    color: #00000; /* Warna teks karakter Dea */
+}
+
+.dialogue {
+    margin-bottom: 20px;
+}
+    </style>
+</head>
+<body>
+    <div class="popup" id="popup">
+        <h3>UMUR HANYALAH ANGKA</h3>
+        <p>Menahan sebuah kerinduan mungkin memang berat, tapi percayalah suatu saat akan bertemu kembali.</p>
+</div>
+    
+    <div class="container">
+        <h1 class="chapter-title">UMUR HANYALAH ANGKA</h1>
+         <h2 class="chapter-title">(PART 2)</h2>
+        <p class="story-text">Waktu yang terus berjalan, tak terasa kini Deo telah lulus SMA. Seperti Deo kini Dea pun duduk dikelas 3 SMP. Sebuah kisah yang terasa cepat untuk berlalu.</p>
+        <p class="story-text">Tepat pada hari ini, Deo pergi ke Yogyakarta untuk meneruskan mimpi yang dia harapkan. Ia pergi untuk berkuliah di UGM. Perasaan yang terasa berat dia rasakan ketika dia harus meninggalkan Dea sendirian.
+        Sambil berpelukan di halaman stasiun poncol, Deo pun mengucapkan kata perpisahan kepada Dea.</p>
+        
+        <div class="dialogue">
+            <p class="character-deo">Deo: "De, aku pamit untuk pergi ke Jogja, kamu jaga diri baik-baik ya."</p>
+            <p class="character-dea">Dea: "Mas Deo beneran pergi ke Jogja?"</p>
+            <p class="character-deo">Deo: "Iya, aku harus meneruskan mimpi ku untuk kuliah di UGM. "</p>
+            <p class="character-dea">Dea: "Lalu, aku disini gimana? Mas Deo tega buat ninggalin aku? nanti yang nemenin aku ditaman siapa kalo mas Deo pergi?"</p>
+            <p class="character-deo">Deo: "Sorry, De! inilah jalan yang kita hadapi, kita sama-sama fokus ke jalan kita, kamu fokus untuk masuk SMA dan aku fokus untuk lulus menjadi mahasiswa cumlaude."</p>
+            <p class="character-dea">Dea: "Yaudah kalo memang harus kayak gini, aku hanya pesan, Mas Deo juga harus jaga diri baik-baik di Jogja, ya."</p>
+        </div>
+        <p class="story-text">Tak terasa air mata membasahi pipi Dea. Deo yang melihat air mata Dea turun pun mengelap dengan dua jari tangannya.</p>
+        <div class="dialogue">
+          <p class="character-deo">Deo: "Kamu, jangan nangis ya De, ini bukanlah akhir tapi ini adalah awal."</p>
+          <p class="character-dea">Dea: "Hmm, ya mas, tapi mas Deo harus janji kalo disana Mas Deo ga boleh aneh-aneh."</p>
+          <p class="character-deo">Deo: "Oke, aku janji, De. Sekarang mas Deo harus masuk stasiun untuk cetak tiket dan masuk ke gerbong. See U De...."</p>
+          <p class="character-dea">Dea: "See U Too mas Deo....</p>
+        </div>
+        
+        <p class="story-text">Pada akhirnya mereka harus ikhlas untuk meninggalkan dan ditinggalkan. Perasaan yang sudah terjalin cukup lama, harus berakhir dengan perpisahan. Tapi benar Kata Deo  bahwa ini semua bukanlah akhir namun semua ini adalah awal.</p>
+    </div>
+    <script>
+    let mainAudio = new Audio('src/assets/tega.mp3');
+let clickCount = 0;
+let popup = document.getElementById('popup');
+let intervalId;
+let audioPlaying = false; // Menyimpan status pemutaran audio
+
+function showPopup() {
+    popup.style.display = 'block';
+    popup.style.left = '0';
+    movePopup();
+
+    // Tidak mematikan audio utama jika sedang diputar
+    // Menggunakan kondisi untuk memastikan audio tidak terputar ulang saat popup muncul
+    if (!audioPlaying) {
+        mainAudio.play();
+    }
+}
+
+function movePopup() {
+    let currentPosition = 0;
+    let screenWidth = window.innerWidth;
+    let animationSpeed = 5;
+
+    intervalId = setInterval(function() {
+        currentPosition += animationSpeed;
+        popup.style.left = currentPosition + 'px';
+
+        if (currentPosition >= screenWidth) {
+            hidePopup();
+        }
+    }, 10);
+}
+
+function hidePopup() {
+    clearInterval(intervalId);
+    popup.style.display = 'none';
+    popup.style.left = '-' + window.innerWidth + 'px';
+
+    // Tidak memulai ulang audio utama setelah popup disembunyikan
+}
+
+// Fungsi untuk menampilkan dan menyembunyikan popup secara berulang
+function togglePopup() {
+    showPopup();
+    setTimeout(function() {
+        hidePopup();
+    }, 30000); // Sesuaikan dengan durasi tampilan popup (dalam milidetik)
+}
+
+// Set interval untuk memanggil togglePopup setiap 40 detik (20 detik tampil, 20 detik sembunyi)
+setInterval(togglePopup, 50000);
+
+// Event listener untuk mengontrol audio utama
+document.body.addEventListener('click', function() {
+    let popup = document.getElementById('popup');
+    if (!popup.contains(event.target)) {
+        clickCount++;
+
+        if (clickCount === 1) {
+            audioPlaying = true;
+            mainAudio.play();
+            console.log('Sukses! Sekarang Audio Utama telah diputar!');
+        } else if (clickCount === 2) {
+            audioPlaying = false;
+            mainAudio.pause();
+            console.log('Sukses! Sekarang Audio Utama telah dipause!');
+            clickCount = 0;
+        }
+    }
+});
+</script>
+</body>
+</html>

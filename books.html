@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kumpulan Buku Tersedia</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+.pustaka-list {
+    list-style: none;
+    padding: 0;
+}
+
+.pustaka-list li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.book-cover {
+    max-width: 100px;
+    margin-right: 10px;
+}
+
+/* Style checkbox dan label */
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"] + label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+/* Style tombol */
+button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+/* Gaya tambahan untuk SweetAlert2 */
+.swal2-popup {
+    font-size: 1.6rem;
+}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Kumpulan Buku Tersedia</h1>
+        
+        <form id="bookForm">
+            <ul class="pustaka-list">
+                <li>
+                    <input type="checkbox" id="book1" name="books" value="Judul Buku Pertama">
+                    <label for="book1">
+                        <img class="book-cover" src="books1.png" alt="Book Cover">
+                        <div class="book-info">
+                            <span class="author">Nama Penulis 1</span>.
+                            <span class="title">Judul Buku Pertama</span>.
+                            <span class="year">2023</span>.
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <!-- Tambahkan entri buku lain sesuai kebutuhan -->
+                </li>
+            </ul>
+
+            <button type="button" onclick="submitForm()">Pilih Buku</button>
+        </form>
+    </div>
+
+    <script>
+        function submitForm() {
+            const form = document.getElementById('bookForm');
+            const selectedBooks = Array.from(form.elements['books'])
+                .filter(input => input.checked)
+                .map(input => input.value);
+                console.log("form telah terkirim")
+
+            if (selectedBooks.length > 0) {
+                // Arahkan ke halaman pembayaran setelah memilih buku
+                window.location.href = 'buy.html';
+            } else {
+                alert('Silakan pilih setidaknya satu buku.');
+            }
+        }
+    </script>
+</body>
+</html>

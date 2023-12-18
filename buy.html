@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Pembelian Buku</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Halaman Pembelian Buku</h1>
+        
+        <form action="proses_pembelian.php" method="post">
+            <label>Pilih Buku:</label>
+
+            <label for="buku1">
+                <input type="checkbox" name="buku[]" id="buku1" value="Buku 1"> Buku 1
+            </label>
+
+            <label for="buku2">
+                <input type="checkbox" name="buku[]" id="buku2" value="Buku 2"> Buku 2
+            </label>
+            <!-- Tambahkan checkbox untuk buku lainnya sesuai kebutuhan -->
+
+            <br>
+
+            <label for="jumlah">Jumlah:</label>
+            <input type="number" name="jumlah" id="jumlah" min="1" required>
+
+            <br>
+
+            <input type="submit" value="Beli">
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "bookgallery",
+  "version": "1.0.0",
+  "description": "Rajinlah membaca ygy",
+  "main": "app.js",
+  "scripts": {
+    "start": "paul app.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

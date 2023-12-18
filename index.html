@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAPTCHA Page</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.css">
+  <style>
+  body {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background: url(src/assets/bg_captcha.jpg);
+  }
+.popup {
+            /* Gaya CSS untuk pop-up */
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+        }
+        
+        .popup-content {
+            /* Gaya CSS untuk konten pop-up */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .close-button {
+            /* Gaya CSS untuk tombol "X" */
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: #000;
+            opacity: 0.9;
+        }
+        h3 {
+          color: black;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        .popup p {
+          color: black;
+        }
+        /* Gaya ikon email di dalam popup */
+.popup-content i.fas.fa-envelope {
+    color: black; /* Mengubah warna ikon email menjadi merah */
+    font-size: 25px; /* Mengubah ukuran ikon email */
+}
+
+/* Gaya teks tautan email di dalam popup */
+.popup-content a {
+    color: blue; /* Mengubah warna tautan email (contoh: biru) */
+    font-size: 16px; /* Mengubah ukuran teks tautan email */
+    text-decoration: none; /* Menghilangkan garis bawah dari tautan */
+}
+        body.popup-open {
+    overflow: hidden;
+}
+
+.captcha-container {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.captcha-box {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
+  font-size: 28px;
+  color: #000;
+  font-weight: bold;
+}
+
+input {
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #3498db;
+  border-radius: 5px;
+}
+
+button {
+  margin-top: 10px;
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+</style>
+</head>
+<body>
+  <div class="captcha-container">
+    <h2>Verifikasi CAPTCHA</h2>
+    <form id="captcha-form">
+      <div class="captcha-box">
+        <span id="captcha-text"></span>
+        <input type="text" id="captcha-input" placeholder="Masukkan hasil penjumlahan" data-required>
+      </div>
+      <button type="button" onclick="generateCaptcha()">Generate CAPTCHA</button>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  
+  <div class="popup" id="popup">
+        <div class="popup-content">
+            <span class="close-button" onclick="closePopup()">X</span> <!-- Tombol "X" untuk menutup pop-up -->
+            <h3>SELAMAT DATANG</h3>
+            <p>Pastikan sebelum menekan tombol submit, anda sudah mengisi form dengan hasil penjumlahan yang benar!</p>
+            <!-- Tambahkan ikon email dengan tautan "mailto" -->
+        <p><a href="mailto:dreamliner.contact@gmail.com"><i class="fas fa-envelope"></i></a></p>
+        </div>
+    </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.all.min.js"></script>
+  <script>
+  	var isPageLocked = false;
+var errorCount = 0;
+var delayInterval = 5000; // Waktu penundaan awal dalam milidetik
+
+document.addEventListener("DOMContentLoaded", function () {
+  generateCaptcha();
+});
+
+function generateCaptcha() {
+  if (isPageLocked) {
+    document.getElementById("captcha-input").disabled = true;
+    document.querySelector("button[type='submit']").disabled = true;
+    return;
+  }
+
+  var num1 = Math.floor(Math.random() * 10);
+  var num2 = Math.floor(Math.random() * 10);
+
+  document.getElementById("captcha-text").innerText = num1 + " + " + num2;
+  document.getElementById("captcha-input").value = "";
+  document.getElementById("captcha-input").disabled = false; // Aktifkan kembali input
+  document.querySelector("button[type='submit']").disabled = false; // Aktifkan kembali tombol
+  document.getElementById("captcha-input").focus();
+}
+
+document.getElementById("captcha-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  if (isPageLocked) {
+    return; // Tidak melakukan verifikasi jika halaman terkunci
+  }
+
+  var userAnswer = parseInt(document.getElementById("captcha-input").value);
+
+  if (isNaN(userAnswer)) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Masukkan hasil penjumlahan terlebih dahulu!'
+    });
+    return;
+  }
+
+  var num1 = parseInt(document.getElementById("captcha-text").innerText.split(" ")[0]);
+  var num2 = parseInt(document.getElementById("captcha-text").innerText.split(" ")[2]);
+  var actualResult = num1 + num2;
+
+  if (userAnswer === actualResult) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Verifikasi CAPTCHA berhasil!',
+      showConfirmButton: false,
+      timer: 1500
+    }).then(() => {
+      window.location.href = "bookgallery.html";
+    });
+  } else {
+    errorCount++;
+    if (errorCount === 5) {
+      isPageLocked = true; // Mengunci halaman
+      Swal.fire({
+        icon: 'error',
+        title: 'Anda telah mencapai batas kesalahan. Silakan tunggu beberapa saat sebelum mencoba lagi.',
+        timer: delayInterval
+      }).then(() => {
+        errorCount = 0; // Reset jumlah kesalahan setelah penundaan
+        delayInterval += 5000; // Tambahkan interval penundaan setiap 5 kesalahan
+        isPageLocked = false; // Membuka kunci halaman
+        generateCaptcha();
+      });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Verifikasi CAPTCHA gagal. Silakan coba lagi.'
+      });
+      generateCaptcha();
+    }
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const popup = document.getElementById("popup");
+    popup.style.display = "block"; // Tampilkan popup saat halaman dimuat
+});
+
+function closePopup() {
+    const popup = document.getElementById("popup");
+    popup.style.display = "none"; // Sembunyikan popup saat tombol "X" diklik
+
+    // Mengembalikan overflow ke "auto" pada tubuh dokumen saat popup ditutup
+    document.body.style.overflow = "auto";
+}
+
+function openPopup() {
+    const popup = document.getElementById("popup");
+    popup.style.display = "block"; // Menampilkan popup
+
+    // Mengunci overflow pada tubuh dokumen saat popup muncul
+    document.body.style.overflow = "hidden";
+}
+</script>
+</body>
+</html>
